@@ -3,3 +3,4 @@ dist/
 __pycache__
 .idea/
 gendiff/scripts/__pycache__
+gendiff/formats/__pycache__

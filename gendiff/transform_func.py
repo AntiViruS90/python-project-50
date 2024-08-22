@@ -30,7 +30,7 @@ def trans_nested_value(value, spaces_count, replacer=' '):
                 )
             else:
                 lines.append(
-                    f"{replacer * spaces_count_1}{key}"
+                    f"{replacer * spaces_count_1}{key}: "
                     f"{iter_(value, spaces_count_1 + 4)}"
                 )
         result = itertools.chain(
