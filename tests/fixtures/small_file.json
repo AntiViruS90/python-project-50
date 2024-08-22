@@ -1,0 +1,9 @@
+{
+  "common": {
+    "setting_1": "Value_1",
+    "setting_3": true
+  },
+  "group_2": {
+    "abc": 12345
+  }
+}

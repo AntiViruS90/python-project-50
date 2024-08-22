@@ -1,0 +1,22 @@
+---
+common:
+  follow: false
+  setting_1: Value 1
+  setting_3:
+  setting_4: some text
+  setting_5:
+    key_5: value_5
+  setting_6:
+    key: value
+    ops: wops
+    dog:
+      wow: "so much"
+group_1:
+  foo: bar
+  baz: bars
+  nest: str
+group_3:
+  deep:
+    id:
+      number: 45
+  fee: 100500

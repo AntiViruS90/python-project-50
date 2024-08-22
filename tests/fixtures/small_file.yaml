@@ -1,0 +1,7 @@
+---
+common:
+  follow: false
+  setting_1: Value_1
+  setting_3:
+group_3:
+  fee: 100500
