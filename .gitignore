@@ -4,3 +4,6 @@ __pycache__
 .idea/
 gendiff/scripts/__pycache__
 gendiff/formats/__pycache__
+.coverage
+cc-test-reporter
+coverage.xml
