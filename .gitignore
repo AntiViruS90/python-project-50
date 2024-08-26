@@ -7,3 +7,5 @@ gendiff/formats/__pycache__
 .coverage
 cc-test-reporter
 coverage.xml
+small_json.cast
+small_yaml.cast
