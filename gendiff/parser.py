@@ -3,13 +3,11 @@ import yaml
 
 
 def current_format(file):
-    file_split = file.split('.')
-
-    if file_split[1] == 'json':
+    if file[-4:] == 'json':
         return 'json'
-    elif file_split[1] in ['yaml', 'yml']:
-        return 'yaml'
 
+    elif file[-4:] in ['yaml', '.yml']:
+        return 'yaml'
 
 
 def parser(data, file_format):

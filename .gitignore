@@ -9,3 +9,6 @@ cc-test-reporter
 coverage.xml
 small_json.cast
 small_yaml.cast
+json_format.cast
+plain_format.cast
+nested.cast

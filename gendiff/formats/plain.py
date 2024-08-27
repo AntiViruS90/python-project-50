@@ -35,7 +35,7 @@ def disassemble(list_of_diff):
                     [
                         path + name, 'updated',
                         [trans_value(complex_or_string(key['value_1'])),
-                        trans_value(complex_or_string(key['value_2']))]
+                            trans_value(complex_or_string(key['value_2']))]
                     ]
                 )
             elif key['type'] == 'nested':
