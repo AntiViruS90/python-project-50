@@ -71,6 +71,6 @@ def plain_format(list_of_diff):
 
         else:
             result += f"Property '{key[0]}' "
-            result += f"was updated. From '{key[2][0]}' to '{key[2][1]}'\n"
+            result += f"was updated. From {key[2][0]} to {key[2][1]}\n"
 
     return result[:-1]
