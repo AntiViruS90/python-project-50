@@ -9,7 +9,7 @@ def default_format(list_of_diff, replacer=' '):
         for key in current_value:
             if key['type'] == 'nested':
                 lines.append(
-                    f"{replacer * spaces_count} "
+                    f"{replacer * spaces_count}  "
                     f"{key['key']}: "
                     f"{iter_(key['children'], spaces_count + 4)}"
                 )
