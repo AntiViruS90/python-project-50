@@ -63,14 +63,14 @@ def plain_format(list_of_diff):
     for key in assembled_keys:
 
         if key[1] == 'added':
-            result += f"Property: '{key[0]}' "
+            result += f"Property '{key[0]}' "
             result += f"was added with value: {key[2]}\n"
 
         elif key[1] == 'removed':
-            result += f"Property: '{key[0]}' was removed\n"
+            result += f"Property '{key[0]}' was removed\n"
 
         else:
-            result += f"Property: '{key[0]}' "
+            result += f"Property '{key[0]}' "
             result += f"was updated. From '{key[2][0]}' to '{key[2][1]}'\n"
 
     return result[:-1]
