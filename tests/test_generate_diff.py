@@ -20,6 +20,7 @@ result_file = "tests/fixtures/right_result.txt"
 result_file_json = "tests/fixtures/right_result_json.txt"
 result_file_plain = "tests/fixtures/right_result_plain.txt"
 
+
 def prepare_file(file):
     with open(file, 'r') as read_file:
         parsed_file = parser(read_file, current_format(file))
