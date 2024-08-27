@@ -6,7 +6,7 @@ def complex_or_string(value):
     if isinstance(value, dict):
         return '[complex value]'
     elif isinstance(value, str):
-        return f"э_{value}'"
+        return f"'{value}'"
     else:
         return value
 
