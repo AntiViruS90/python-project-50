@@ -1,4 +1,11 @@
 def generate_list_of_diff(data_1, data_2):
+    """
+    Generate the list of differences between two data dictionaries
+    :param data_1: (dict) First data dictionary
+    :param data_2: (dict) Second data dictionary
+    :return: (list) List of dictionaries representing the differences
+            between the two data dictionaries
+    """
     def run(curr_data_1, curr_data_2):
         result = []
 

@@ -1,5 +1,5 @@
 {
-   common: {
+    common: {
       + follow: false
         setting_1: Value 1
       - setting_2: 200
@@ -9,8 +9,8 @@
       + setting_5: {
             key_5: value_5
         }
-       setting_6: {
-           dog: {
+        setting_6: {
+            dog: {
               - wow: 
               + wow: so much
             }
@@ -18,7 +18,7 @@
           + ops: wops
         }
     }
-   group_1: {
+    group_1: {
       - baz: bas
       + baz: bars
         foo: bar

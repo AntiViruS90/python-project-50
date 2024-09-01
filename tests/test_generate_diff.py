@@ -1,14 +1,15 @@
 from gendiff.gen_diff import generate_diff
 from gendiff.generator import generate_list_of_diff
-from gendiff.parser import current_format, parser
-from gendiff.transform_func import trans_type, trans_nested_value, trans_value
-from gendiff.formats.stylish import default_format
-from gendiff.formats.plain import plain_format, complex_or_string
-from gendiff.formats.plain import disassemble, assemble
-from gendiff.formats.json import json_format
-from gendiff.formats.select_format import select_format
+from gendiff.parser import get_file_extension, parse_file # current_format, parser
+from gendiff.transform_func import trans_value
+from gendiff.formatters.stylish import determine_type, iterate_nested_value, default_format
+from gendiff.formatters.plain import plain_format, complex_or_string
+from gendiff.formatters.plain import disassemble, assemble
+from gendiff.formatters.json import json_format
+from gendiff.formatters import select_format
 import json
 import yaml
+import pytest
 
 json_file_1 = "tests/fixtures/file_1.json"
 json_file_2 = "tests/fixtures/file_2.json"
@@ -23,7 +24,7 @@ result_file_plain = "tests/fixtures/right_result_plain.txt"
 
 def prepare_file(file):
     with open(file, 'r') as read_file:
-        parsed_file = parser(read_file, current_format(file))
+        parsed_file = parse_file(read_file, get_file_extension(file))
 
         return parsed_file
 
@@ -89,11 +90,16 @@ def test_plain():
         generate_list_of_diff(json_data_1, json_data_2)
     ) == right_result
 
-
-def test_complex_or_string():
-    assert complex_or_string({'a': '1', 'b': 2}) == "[complex value]"
-    assert complex_or_string('hello') == "hello"
-    assert complex_or_string(25) == 25
+@pytest.mark.parametrize(
+    'data, expected',
+    [
+        ({'a': '1', 'b': 2}, "[complex value]"),
+        ('hello', "'hello'"),
+        (25, 25)
+    ]
+)
+def test_complex_or_string(data, expected):
+    assert complex_or_string(data) == expected
 
 
 def test_disassemble():
@@ -131,34 +137,59 @@ def test_json_format():
     ) == right_result
 
 
-def test_select_format():
-    assert select_format('stylish') == default_format
-    assert select_format('plain') == plain_format
-    assert select_format('json') == json_format
+@pytest.mark.parametrize(
+    'stile_format, expected_format',
+    [
+        ('stylish', default_format),
+        ('plain', plain_format),
+        ('json', json_format)
+    ]
+)
+def test_select_format(stile_format, expected_format):
+    assert select_format(stile_format) == expected_format
 
 
-def test_trans_value():
-    assert trans_value(True) == 'true'
-    assert trans_value(False) == 'false'
-    assert trans_value(None) == 'null'
-    assert trans_value('120.120') == '120.120'
+@pytest.mark.parametrize(
+    'value, expected_value',
+    [
+        (True, 'true'),
+        (False, 'false'),
+        (None, 'null'),
+        ('120.120', '120.120'),
+    ]
+)
+def test_trans_value(value, expected_value):
+    assert trans_value(value) == expected_value
 
 
-def test_trans_type():
-    assert trans_type('added') == '+ '
-    assert trans_type('deleted') == '- '
-    assert trans_type('changed') == '  '
+@pytest.mark.parametrize(
+    'determine, expected_type',
+    [
+        ('added', '+ '),
+        ('deleted', '- '),
+        ('changed', '  '),
+    ]
+)
+def test_trans_type(determine, expected_type):
+    assert determine_type(determine) == expected_type
 
 
-def test_trans_nested_value():
+
+def test_iterate_nested_value():
     nested_value = {'2': {'3': '#'}, 'x': 1}
     right_result = '{\n  2: {\n      3: #\n  }\n  x: 1\n}'
-    assert trans_nested_value(nested_value, 2) == right_result
+    assert iterate_nested_value(nested_value, 2) == right_result
 
+@pytest.mark.parametrize(
+    'file_path, expected_extension',
+    [
+        ("tests/fixtures/file_1.json", 'json'),
+        ("tests/fixtures/file_1.yaml", 'yaml'),
+    ]
+)
+def test_get_file_extension(file_path, expected_extension):
+    assert get_file_extension(file_path) == expected_extension
 
-def test_current_format():
-    assert current_format("tests/fixtures/file_1.json") == 'json'
-    assert current_format("tests/fixtures/file_1.yaml") == 'yaml'
 
 
 right_result_1 = open(json_file_1)
@@ -167,9 +198,9 @@ right_result_2 = open(yaml_file_1)
 
 def test_parser():
     with open(json_file_1, 'r') as json_file:
-        assert parser(json_file, 'json') == json.load(right_result_1)
+        assert parse_file(json_file, 'json') == json.load(right_result_1)
 
     with open(yaml_file_1, 'r') as yaml_file:
-        assert (parser(yaml_file, 'yaml') == yaml.load(
+        assert (parse_file(yaml_file, 'yaml') == yaml.load(
             right_result_2, Loader=yaml.FullLoader
         ))

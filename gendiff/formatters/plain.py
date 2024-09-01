@@ -12,6 +12,14 @@ def complex_or_string(value):
 
 
 def disassemble(list_of_diff):
+    """
+    Iterates over a list of differences and disassembles them into a flat
+    list of lists containing information about the changes.
+    :param list_of_diff: (list) A list containing dictionaries representing
+                        differences between objects.
+    :return: (list) A flat list containing information about changes in a
+            formatted way.
+    """
     def iter_(keys, path=''):
         lines = []
 
@@ -49,12 +57,24 @@ def disassemble(list_of_diff):
 
 
 def assemble(list_of_keys, n=3):
+    """
+    Divides a list of keys into sublists of size n.
+    :param list_of_keys:  (list) A list of keys to be divided into sublists
+    :param n: (int) The size of each sublist
+    :return: (list) A list containing sublists of keys
+    """
     result = [list_of_keys[i:i + n] for i in range(0, len(list_of_keys), n)]
 
     return result
 
 
 def plain_format(list_of_diff):
+    """
+    Formats the list of differences into a human-readable plain text format
+    :param list_of_diff: (list) A list containing dictionaries representing
+                        differences between objects
+    :return: (str) A formatted plain text representing the differences
+    """
     disassembled_keys = disassemble(list_of_diff)
     assembled_keys = assemble(disassembled_keys)
 
