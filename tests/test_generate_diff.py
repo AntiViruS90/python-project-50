@@ -1,6 +1,6 @@
 from gendiff.gen_diff import generate_diff
 from gendiff.generator import generate_list_of_diff
-from gendiff.parser import get_file_extension, parse_file # current_format, parser
+from gendiff.parser import get_file_extension, parse_file
 from gendiff.transform_func import trans_value
 from gendiff.formatters.stylish import determine_type, iterate_nested_value, default_format
 from gendiff.formatters.plain import plain_format, complex_or_string
@@ -90,6 +90,7 @@ def test_plain():
         generate_list_of_diff(json_data_1, json_data_2)
     ) == right_result
 
+
 @pytest.mark.parametrize(
     'data, expected',
     [
@@ -174,11 +175,11 @@ def test_trans_type(determine, expected_type):
     assert determine_type(determine) == expected_type
 
 
-
 def test_iterate_nested_value():
     nested_value = {'2': {'3': '#'}, 'x': 1}
     right_result = '{\n  2: {\n      3: #\n  }\n  x: 1\n}'
     assert iterate_nested_value(nested_value, 2) == right_result
+
 
 @pytest.mark.parametrize(
     'file_path, expected_extension',
@@ -189,7 +190,6 @@ def test_iterate_nested_value():
 )
 def test_get_file_extension(file_path, expected_extension):
     assert get_file_extension(file_path) == expected_extension
-
 
 
 right_result_1 = open(json_file_1)
